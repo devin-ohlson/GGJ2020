@@ -3,26 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class Simple : MonoBehaviour, Breakable
+public class Simple : Breakable
 {
-    private Animator animator;
-    private AudioSource audioSource;
+	// Immediately repair the object
+	protected override IEnumerator StartRepairing()
+	{
+		Repair();
+		return null;
+	}
 
-    public AudioClip breaking;
-    public AudioClip repairing;
+	protected override void StopRepairing()
+	{
+		// No way to stop repairing, since repair happens immediately
+	}
 
-    void Awake(){
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
-    }
-
-    public virtual void Interact(CharacterCtrl controller){
-        
-    }
-
-    public virtual void Break(){
-
-    }
-
-
+	public override bool TryInteract(CharacterCtrl controller)
+	{
+		if (Input.GetAxisRaw("Interact") != 0)
+		{
+			Interact(controller);
+			return true;
+		}
+		return false;
+	}
 }

@@ -4,9 +4,44 @@ using UnityEngine;
 
 public class SimpleTimed : Simple
 {
-    public int holdDuration {get;set;}
+	public float holdDuration = 2.5f;
 
-    public override void Interact(CharacterCtrl controller){
-        
-    }
+	[SerializeField] private CircleFillAnimation actionAnimation = null;
+
+	private void Start()
+	{
+		actionAnimation.gameObject.SetActive(false);
+	}
+
+	public override bool TryInteract(CharacterCtrl controller)
+	{
+		actionAnimation.gameObject.SetActive(true);
+		return base.TryInteract(controller);
+	}
+
+	protected override IEnumerator StartRepairing()
+	{
+		actionAnimation.SetDuration(holdDuration);
+		actionAnimation.Listen(FinishRepairing);
+
+		while (true)
+		{
+			actionAnimation.Activate(Input.GetAxisRaw("Interact") != 0);
+			yield return null;
+		}
+	}
+
+	protected bool FinishRepairing()
+	{
+		Repair();
+		StopRepairing();
+		return true;
+	}
+
+	protected override void StopRepairing()
+	{
+		StopCoroutine(StartRepairing());
+		actionAnimation.Reset();
+		actionAnimation.gameObject.SetActive(false);
+	}
 }
