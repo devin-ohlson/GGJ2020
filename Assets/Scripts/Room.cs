@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 	public bool IsStartingRoom;
-	public bool HasLeftDoor, HasRightDoor;
+	[SerializeField] private List<Direction> connectionDirections;
+	private bool[] connectionsArray;
+
 	public float RoomWidth = 3;
 
 	private Breakable[] breakables;
 	private CameraController mainCam;
+	private StairCtrl stairs;
 
 	//Stuff for blacking the room out
 	[SerializeField] private SpriteRenderer blackOverlay;
@@ -19,6 +22,14 @@ public class Room : MonoBehaviour {
 		breakables = GetComponentsInChildren<Breakable>();
 		mainCam = Camera.main.gameObject.GetComponent<CameraController>();
 
+		stairs = GetComponentInChildren<StairCtrl>();
+		if(stairs != null) {
+			if (stairs.up != null)
+				connectionDirections.Add(Direction.Up);
+			if (stairs.down != null)
+				connectionDirections.Add(Direction.Down);
+		}
+		
 		if (!IsStartingRoom) {
 			Color blackedOut = blackOverlay.color;
 			blackedOut.a = blackoutOpacity;
@@ -64,12 +75,12 @@ public class Room : MonoBehaviour {
 		return breakables;
 	}
 
-	public bool GetConnectingDirection() {
-		if (HasLeftDoor && HasRightDoor)
-			return Random.Range(0, 2) == 1;
-		else if (HasLeftDoor)
-			return false;
-		else
-			return true;
+	public Direction GetConnectingDirection() {
+		int index = Random.Range(0, connectionDirections.Count);
+		return connectionDirections[index];
+	}
+
+	public StairCtrl GetStairs() {
+		return stairs;
 	}
 }

@@ -5,8 +5,8 @@ using System;
 
 public class StairCtrl : MonoBehaviour
 {
-    [SerializeField] private StairCtrl up = null;
-    [SerializeField] private StairCtrl down = null;
+    public StairCtrl up = null;
+    public StairCtrl down = null;
     
     void Start()
     {
@@ -25,4 +25,10 @@ public class StairCtrl : MonoBehaviour
             obj.position = diff + destination.transform.position;
         }
     }
+
+	private void OnTriggerStay2D(Collider2D collision) {
+		if(collision.gameObject.tag == "Visitor") {
+			collision.gameObject.GetComponent<NPCVisitor>().EnterStairs(this, up != null, down != null);
+		}
+	}
 }
