@@ -2,22 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Prompt : Breakable
+public abstract class Prompt : Breakable
 {
+	[SerializeField] private SpriteRenderer prompt = null;
+
+	[SerializeField] private float neededProgress = 5;
+	protected float progress = 0;
+	
 	protected override IEnumerator StartRepairing()
 	{
-		throw new System.NotImplementedException();
+		progress = 0;
+
+		while (progress < neededProgress)
+		{
+			UpdateProgress();
+			yield return null;
+		}
+
+		FinishRepairing();
+	}
+
+	protected void FinishRepairing()
+	{
+		Repair();
+		StopRepairing();
 	}
 
 	protected override void StopRepairing()
 	{
-		throw new System.NotImplementedException();
+		StopCoroutine(StartRepairing());
+		prompt.gameObject.SetActive(false);
+		progress = 0;
 	}
 
 	// Prompts always start their interaction
 	public override bool TryInteract(CharacterCtrl controller)
 	{
+		prompt.gameObject.SetActive(true);
 		Interact(controller);
 		return true;
 	}
+
+	protected abstract void UpdateProgress();
 }

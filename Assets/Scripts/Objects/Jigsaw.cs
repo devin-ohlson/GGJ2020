@@ -20,7 +20,7 @@ public class Jigsaw : Popup
     }
 
     public void Update(){
-        if(isInteracting){
+        if(IsInteracting){
             DragHandler[] currentPuzzle = assembledBoard.GetComponentsInChildren<DragHandler>();
             for (int i = 0; i < currentPuzzle.Length; i++){
                 Debug.Log(currentPuzzle[i].GetImage().sprite.name);
@@ -28,7 +28,6 @@ public class Jigsaw : Popup
 
             if(currentPuzzle.Length == solution.Length){
                 if(isPuzzleSolved(currentPuzzle, solution)){
-                    Debug.Log("Puzzle was solved!/n*/n*/n*/n*/n*/n*/n*/n*/n*/n*/n*");
                     Repair();
                 }
             }
@@ -38,9 +37,6 @@ public class Jigsaw : Popup
     bool isPuzzleSolved(DragHandler[] currentPuzzle, Sprite[] solution){
         for(int i = 0; i < solution.Length; i++){
             if(currentPuzzle[i].GetImage().sprite != solution[i]){
-                Debug.Log("Current puzzle: " + currentPuzzle[i].GetImage().sprite.name);
-                Debug.Log("Solution puzzle: " + solution[i].name);
-                Debug.Log("Puzzle is not solved");
                 return false;
             }
         }
@@ -50,7 +46,6 @@ public class Jigsaw : Popup
     public void GenerateJigsaw(){
         int j;
         Sprite temp;
-        Debug.Log("Randomizing photos: " + images.Length);
         for (int i = images.Length - 1; i > 0; i--){
             j = Random.Range(0, i);
             temp = images[i];
@@ -59,7 +54,6 @@ public class Jigsaw : Popup
         }
 
         DragHandler[] slots = pieces.GetComponentsInChildren<DragHandler>();
-        Debug.Log("Putting sprites in slot images: " + slots.Length);
         for (int i = 0; i < images.Length; i++){
             Image slotImage = slots[i].GetImage();
             slotImage.sprite = images[i];

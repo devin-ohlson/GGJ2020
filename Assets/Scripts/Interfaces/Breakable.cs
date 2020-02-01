@@ -15,10 +15,10 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	public AudioClip breaking;
 	public AudioClip repairing;
 	public AudioClip repaired;
-
+	
 	public Sprite fixedSprite, brokenSprite;
 
-	public bool isInteracting;
+	protected bool IsInteracting { get; private set; }
 
 	protected virtual void Awake()
 	{
@@ -28,9 +28,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		renderer = GetComponent<SpriteRenderer>();
 		ghost = FindObjectOfType<Ghost>();
 		this.interactCollider.enabled = false;
-		isInteracting = false;
-
-		//Break();
+		IsInteracting = false;
 	}
 
 	private void BreakSound()
@@ -68,9 +66,8 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	// Should be called on a successful repair
 	protected virtual void Repair()
 	{
-        Debug.Log("Repaired");
 		ghost.ObjectRepaired(this);
-		isInteracting = false;
+		IsInteracting = false;
 		SetBroken(false);
 		RepairedSound();
 	}
@@ -91,9 +88,9 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	// When interacted with, Breakables start repairing
 	public virtual void Interact(CharacterCtrl controller)
 	{
-		if (!isInteracting)
+		if (!IsInteracting)
 		{
-			isInteracting = true;
+			IsInteracting = true;
 			RepairingSound();
 			StartCoroutine(StartRepairing());
 		}
@@ -106,7 +103,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		StopCoroutine(StartRepairing());
 		StopRepairing();
 
-		isInteracting = false;
+		IsInteracting = false;
 		return true;
 	}
 	

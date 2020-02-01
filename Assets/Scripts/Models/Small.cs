@@ -15,7 +15,7 @@ public class Small : Interactable
 
 	public bool TryInteract(CharacterCtrl controller)
 	{
-		if (Input.GetAxisRaw("Interact") != 0)
+		if (Input.GetButtonDown("Interact"))
 		{
 			Interact(controller);
 			return true;

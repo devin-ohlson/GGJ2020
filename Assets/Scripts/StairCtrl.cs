@@ -43,7 +43,7 @@ public class StairCtrl : MonoBehaviour, Interactable
 
 	public bool TryInteract(CharacterCtrl controller)
 	{
-		if (Input.GetAxisRaw("Vertical") != 0)
+		if (Input.GetButtonDown("Interact"))
 		{
 			Travel(controller.transform, Input.GetAxisRaw("Vertical") > 0);
 			return true;
