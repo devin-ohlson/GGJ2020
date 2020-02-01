@@ -21,19 +21,19 @@ public class CharacterCtrl : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collider)
     {
-        if (Input.GetAxisRaw("Vertical") != 0)
+        Interactable interactable = collider.GetComponent<Interactable>();
+        if (interactable != null)
         {
-            StairCtrl stair = collider.GetComponent<StairCtrl>();
-            if (stair != null)
-            {
-                stair.Travel(transform, Input.GetAxisRaw("Vertical") > 0);
-            }
+            interactable.TryInteract(this);
         }
-        if (Input.GetMouseButtonDown(0)){
-            Interactable interactable = collider.GetComponent<Interactable>();
-            if (interactable != null){
-                interactable.Interact(this);
-            }
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        Interactable interactable = collider.GetComponent<Interactable>();
+        if (interactable != null)
+        {
+            interactable.Reset();
         }
     }
 }

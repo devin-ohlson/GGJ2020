@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class StairCtrl : MonoBehaviour
+public class StairCtrl : MonoBehaviour, Interactable
 {
     [SerializeField] private StairCtrl up = null;
     [SerializeField] private StairCtrl down = null;
@@ -14,7 +14,7 @@ public class StairCtrl : MonoBehaviour
             throw new ArgumentException(this.name + " has mismatched stairs.");
     }
 
-    public void Travel(Transform obj, bool isGoingUp)
+    void Travel(Transform obj, bool isGoingUp)
     {
         StairCtrl destination = (isGoingUp) ? up : down;
 
@@ -24,5 +24,26 @@ public class StairCtrl : MonoBehaviour
 
             obj.position = diff + destination.transform.position;
         }
+    }
+
+    public void Interact(CharacterCtrl controller)
+    {
+        Travel(controller.transform, Input.GetAxisRaw("Vertical") > 0);
+    }
+
+    public bool Reset()
+    {
+        return false; // Interactions can't be stopped.
+    }
+
+    public bool TryInteract(CharacterCtrl controller)
+    {
+        if (Input.GetAxisRaw("Vertical") != 0)
+        {
+            Travel(controller.transform, Input.GetAxisRaw("Vertical") > 0);
+            return true;
+        }
+        else
+            return false;
     }
 }

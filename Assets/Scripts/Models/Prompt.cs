@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Prompt : MonoBehaviour, Breakable
+public class Prompt : Breakable
 {
-
-    
-    public void Interact(CharacterCtrl controller){
-        
+    protected override IEnumerator StartRepairing()
+    {
+        throw new System.NotImplementedException();
     }
 
-    public void Break(){
+    protected override void StopRepairing()
+    {
+        throw new System.NotImplementedException();
+    }
 
+    // Prompts always start their interaction
+    public override bool TryInteract(CharacterCtrl controller)
+    {
+        Interact(controller);
+        return true;
     }
 }
