@@ -2042,7 +2042,7 @@ GameObject:
   - component: {fileID: 1311218413}
   m_Layer: 0
   m_Name: TESTNPC
-  m_TagString: Untagged
+  m_TagString: Visitor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2147,7 +2147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 0.6
-  timeInRoom: 30
+  timeInRoom: 20
   movementStateDuration: 3.5
   currentRoom: {fileID: 2033174625}
 --- !u!50 &1311218414
