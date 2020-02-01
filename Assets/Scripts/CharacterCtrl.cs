@@ -6,15 +6,13 @@ public class CharacterCtrl : MonoBehaviour
 {
     private Rigidbody2D rb;
     [SerializeField] private float walkSpeed = 5;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    void FixedUpdate()
     {
         float movement = (Input.GetAxis("Horizontal") != 0) ? Input.GetAxis("Horizontal") * walkSpeed : 0;
         
