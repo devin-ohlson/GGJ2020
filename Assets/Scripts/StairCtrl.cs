@@ -5,8 +5,8 @@ using System;
 
 public class StairCtrl : MonoBehaviour, Interactable
 {
-	[SerializeField] private StairCtrl up = null;
-	[SerializeField] private StairCtrl down = null;
+    public StairCtrl up = null;
+    public StairCtrl down = null;
 	
 	void Start()
 	{
@@ -14,7 +14,7 @@ public class StairCtrl : MonoBehaviour, Interactable
 			throw new ArgumentException(this.name + " has mismatched stairs.");
 	}
 
-	void Travel(Transform obj, bool isGoingUp)
+	public void Travel(Transform obj, bool isGoingUp)
 	{
 		StairCtrl destination = (isGoingUp) ? up : down;
 
@@ -26,6 +26,11 @@ public class StairCtrl : MonoBehaviour, Interactable
 		}
 	}
 
+	private void OnTriggerStay2D(Collider2D collision) {
+		if(collision.gameObject.tag == "Visitor") {
+			collision.gameObject.GetComponent<NPCVisitor>().EnterStairs(this, up != null, down != null);
+		}
+	}
 	public void Interact(CharacterCtrl controller)
 	{
 		Travel(controller.transform, Input.GetAxisRaw("Vertical") > 0);
