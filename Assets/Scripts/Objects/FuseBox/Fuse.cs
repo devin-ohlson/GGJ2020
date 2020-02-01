@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Fuse : MonoBehaviour {
-	private Room myRoom;
+	[SerializeField] private Room myRoom;
 	private AudioSource sounder;
 	[SerializeField] private AudioClip correctSound, wrongSound;
 
-	public void SetRoom(Room room) {
-		myRoom = room;
+	private void Start() {
 		sounder = GetComponent<AudioSource>();
 	}
 
