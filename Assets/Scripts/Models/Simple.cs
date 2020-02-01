@@ -9,7 +9,7 @@ public class Simple : Breakable
 	protected override IEnumerator StartRepairing()
 	{
 		Repair();
-		return null;
+		yield return null;
 	}
 
 	protected override void StopRepairing()

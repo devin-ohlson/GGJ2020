@@ -58,6 +58,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	// Should be called on a successful repair
 	protected void Repair()
 	{
+        Debug.Log("Repaired");
 		SetBroken(false);
 		RepairedSound();
 	}
