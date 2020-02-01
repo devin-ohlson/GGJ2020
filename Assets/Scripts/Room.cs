@@ -29,6 +29,7 @@ public class Room : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
 			mainCam.LerpToPosition(transform.position);
+			StopAllCoroutines();
 			StartCoroutine(RoomFade(false));
 		}
 		else if(collision.gameObject.tag == "Visitor")
@@ -36,6 +37,7 @@ public class Room : MonoBehaviour {
 	}
 	private void OnTriggerExit2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
+			StopAllCoroutines();
 			StartCoroutine(RoomFade(true));
 		}
 	}
