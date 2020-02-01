@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Big : Interactable
 {
-    public void Interact(){
+    public void Interact(CharacterCtrl controller){
 
     }
 

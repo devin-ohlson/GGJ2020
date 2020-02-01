@@ -6,7 +6,7 @@ public class Prompt : MonoBehaviour, Breakable
 {
 
     
-    public void Interact(){
+    public void Interact(CharacterCtrl controller){
         
     }
 

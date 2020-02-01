@@ -5,5 +5,5 @@ using UnityEngine;
 
 public interface Interactable
 {
-    void Interact(); // Called by the player to interact with this interactable
+    void Interact(CharacterCtrl controller); // Called by the player to interact with this interactable
 }

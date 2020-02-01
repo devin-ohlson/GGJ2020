@@ -6,7 +6,7 @@ public class SimpleTimed : Simple
 {
     public int holdDuration {get;set;}
 
-    public override void Interact(){
+    public override void Interact(CharacterCtrl controller){
         
     }
 }

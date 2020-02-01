@@ -29,5 +29,11 @@ public class CharacterCtrl : MonoBehaviour
                 stair.Travel(transform, Input.GetAxisRaw("Vertical") > 0);
             }
         }
+        if (Input.GetMouseButtonDown(0)){
+            Interactable interactable = collider.GetComponent<Interactable>();
+            if (interactable != null){
+                interactable.Interact(this);
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ public class Simple : MonoBehaviour, Breakable
         audioSource = GetComponent<AudioSource>();
     }
 
-    public virtual void Interact(){
+    public virtual void Interact(CharacterCtrl controller){
         
     }
 
@@ -24,5 +24,5 @@ public class Simple : MonoBehaviour, Breakable
 
     }
 
-    
+
 }

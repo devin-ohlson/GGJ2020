@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Popup : MonoBehaviour, Breakable
 {
-    public void Interact(){
-        
+
+    public Canvas canvas;
+
+    public void Interact(CharacterCtrl controller){
+        canvas.gameObject.SetActive(true);
     }
 
     public void Break(){
