@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 	public bool IsStartingRoom;
+	public bool HasLeftDoor, HasRightDoor;
 
 	private Breakable[] breakables;
 
@@ -11,8 +12,8 @@ public class Room : MonoBehaviour {
 
 	//Stuff for blacking the room out
 	[SerializeField] private SpriteRenderer blackOverlay;
-	[SerializeField] private float blackoutDuration;
-	[SerializeField] private float blackoutOpacity;
+	[SerializeField] private float blackoutDuration = 0.75f;
+	[SerializeField] private float blackoutOpacity = 0.8f;
 
 	void Start() {
 		breakables = GetComponentsInChildren<Breakable>();
@@ -30,14 +31,13 @@ public class Room : MonoBehaviour {
 			StartCoroutine(ActivateRoom());
 		}
 	}
-
 	private void OnTriggerExit2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
-			StartCoroutine(Blackout());
+			StartCoroutine(BlackoutRoom());
 		}
 	}
 
-	private IEnumerator ActivateRoom() {
+	public IEnumerator ActivateRoom() {
 		mainCam.LerpToPosition(transform.position);
 		float timer = 0;
 
@@ -54,7 +54,7 @@ public class Room : MonoBehaviour {
 		finalColor.a = 0;
 		blackOverlay.color = finalColor;
 	}
-	private IEnumerator Blackout() {
+	public IEnumerator BlackoutRoom() {
 		float timer = 0;
 
 		while(timer < blackoutDuration) {
@@ -69,5 +69,10 @@ public class Room : MonoBehaviour {
 		Color finalColor = blackOverlay.color;
 		finalColor.a = blackoutOpacity;
 		blackOverlay.color = finalColor;
+	}
+
+	//NPCs can use these to evaluate the room and navigate
+	public Breakable[] GetBreakables() {
+		return breakables;
 	}
 }
