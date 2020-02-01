@@ -28,22 +28,22 @@ public class Room : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
-			StartCoroutine(ActivateRoom());
+			mainCam.LerpToPosition(transform.position);
+			StartCoroutine(RoomFade(false));
 		}
 	}
 	private void OnTriggerExit2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
-			StartCoroutine(BlackoutRoom());
+			StartCoroutine(RoomFade(true));
 		}
 	}
 
-	public IEnumerator ActivateRoom() {
-		mainCam.LerpToPosition(transform.position);
+	private IEnumerator RoomFade(bool fadeOut) {
 		float timer = 0;
 
-		while(timer < blackoutDuration) {
+		while (timer < blackoutDuration) {
 			Color newColor = blackOverlay.color;
-			newColor.a -= Time.deltaTime * (blackoutOpacity / blackoutDuration);
+			newColor.a += Time.deltaTime * (blackoutOpacity / blackoutDuration) * (fadeOut ? 1 : -1);
 			blackOverlay.color = newColor;
 
 			timer += Time.deltaTime;
@@ -51,23 +51,7 @@ public class Room : MonoBehaviour {
 		}
 
 		Color finalColor = blackOverlay.color;
-		finalColor.a = 0;
-		blackOverlay.color = finalColor;
-	}
-	public IEnumerator BlackoutRoom() {
-		float timer = 0;
-
-		while(timer < blackoutDuration) {
-			Color newColor = blackOverlay.color;
-			newColor.a += Time.deltaTime * (blackoutOpacity / blackoutDuration);
-			blackOverlay.color = newColor;
-
-			timer += Time.deltaTime;
-			yield return new WaitForEndOfFrame();
-		}
-
-		Color finalColor = blackOverlay.color;
-		finalColor.a = blackoutOpacity;
+		finalColor.a = (fadeOut ? blackoutOpacity : 0);
 		blackOverlay.color = finalColor;
 	}
 
