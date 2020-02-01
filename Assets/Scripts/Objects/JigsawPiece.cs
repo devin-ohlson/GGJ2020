@@ -9,6 +9,7 @@ public class JigsawPiece : MonoBehaviour
 
     void OnMouseDown(){
         distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+        Debug.Log(distance);
         dragging = true;
     }
     void OnMouseUp(){
@@ -21,5 +22,5 @@ public class JigsawPiece : MonoBehaviour
             Vector3 rayPoint = ray.GetPoint(distance);
             transform.position = rayPoint;
         }
-    }
+    }   
 }
