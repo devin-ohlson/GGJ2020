@@ -13,7 +13,7 @@ public class Room : MonoBehaviour {
 	private StairCtrl stairs;
 
 	private bool currentRoom;
-	[SerializeField] private bool lightsPowered = true;
+	public bool LightsPowered = true;
 
 	//Stuff for blacking the room out
 	[SerializeField] private SpriteRenderer blackOverlay;
@@ -62,7 +62,7 @@ public class Room : MonoBehaviour {
 		float timer = 0;
 		//It only turns half on if the power is out
 		float lightModifier = 1;
-		if (!fadeOut && !lightsPowered)
+		if (!fadeOut && !LightsPowered)
 			lightModifier = powerOutModifier;
 
 		while (timer < blackoutDuration && blackOverlay.color.a < blackoutOpacity) {
@@ -93,8 +93,9 @@ public class Room : MonoBehaviour {
 		return stairs;
 	}
 
+	//Stuff for the fuses:
 	public void SetLightPower(bool on) {
-		lightsPowered = on;
+		LightsPowered = on;
 		if (currentRoom) {
 			Color newBlack = blackOverlay.color;
 			newBlack.a = blackoutOpacity / 2;
