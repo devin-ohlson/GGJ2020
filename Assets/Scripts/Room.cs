@@ -5,9 +5,9 @@ using UnityEngine;
 public class Room : MonoBehaviour {
 	public bool IsStartingRoom;
 	public bool HasLeftDoor, HasRightDoor;
+	public float RoomWidth = 3;
 
 	private Breakable[] breakables;
-
 	private CameraController mainCam;
 
 	//Stuff for blacking the room out
@@ -31,6 +31,8 @@ public class Room : MonoBehaviour {
 			mainCam.LerpToPosition(transform.position);
 			StartCoroutine(RoomFade(false));
 		}
+		else if(collision.gameObject.tag == "Visitor")
+			collision.gameObject.GetComponent<NPCVisitor>().EnterRoom(this);
 	}
 	private void OnTriggerExit2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
@@ -58,5 +60,14 @@ public class Room : MonoBehaviour {
 	//NPCs can use these to evaluate the room and navigate
 	public Breakable[] GetBreakables() {
 		return breakables;
+	}
+
+	public bool GetConnectingDirection() {
+		if (HasLeftDoor && HasRightDoor)
+			return Random.Range(0, 2) == 1;
+		else if (HasLeftDoor)
+			return false;
+		else
+			return true;
 	}
 }
