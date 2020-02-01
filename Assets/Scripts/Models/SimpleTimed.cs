@@ -6,23 +6,27 @@ public class SimpleTimed : Simple
 {
     public float holdDuration = 2.5f;
 
-    [SerializeField] private CircleFillAnimation animation;
+    [SerializeField] private CircleFillAnimation actionAnimation = null;
 
     private void Start()
     {
-        animation.gameObject.SetActive(false);
+        actionAnimation.gameObject.SetActive(false);
+    }
+
+    public override bool TryInteract(CharacterCtrl controller)
+    {
+        actionAnimation.gameObject.SetActive(true);
+        return base.TryInteract(controller);
     }
 
     protected override IEnumerator StartRepairing()
     {
-        Debug.Log("Made it!");
-        animation.gameObject.SetActive(true);
-        animation.SetDuration(holdDuration);
-        animation.Listen(FinishRepairing);
+        actionAnimation.SetDuration(holdDuration);
+        actionAnimation.Listen(FinishRepairing);
 
         while (true)
         {
-            animation.Activate(Input.GetAxisRaw("Interact") != 0);
+            actionAnimation.Activate(Input.GetAxisRaw("Interact") != 0);
             yield return null;
         }
     }
@@ -37,7 +41,7 @@ public class SimpleTimed : Simple
     protected override void StopRepairing()
     {
         StopCoroutine(StartRepairing());
-        animation.Reset();
-        animation.gameObject.SetActive(false);
+        actionAnimation.Reset();
+        actionAnimation.gameObject.SetActive(false);
     }
 }

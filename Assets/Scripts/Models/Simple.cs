@@ -21,7 +21,6 @@ public class Simple : Breakable
     {
         if (Input.GetAxisRaw("Interact") != 0)
         {
-            Debug.Log(Input.GetAxisRaw("Interact"));
             Interact(controller);
             return true;
         }
