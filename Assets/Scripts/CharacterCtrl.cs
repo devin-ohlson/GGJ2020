@@ -23,12 +23,12 @@ public class CharacterCtrl : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collider)
     {
-        if (Input.GetAxis("Vertical") != 0)
+        if (Input.GetAxisRaw("Vertical") != 0)
         {
             StairCtrl stair = collider.GetComponent<StairCtrl>();
             if (stair != null)
             {
-                stair.Travel(transform, Input.GetAxis("Vertical") > 0);
+                stair.Travel(transform, Input.GetAxisRaw("Vertical") > 0);
             }
         }
     }
