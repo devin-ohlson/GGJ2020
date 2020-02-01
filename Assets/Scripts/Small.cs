@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Small : Item
+public class Small : Interactable
 {
-    public void interact(){
+    public void Interact(){
 
     }
 }

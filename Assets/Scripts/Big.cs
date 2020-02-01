@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Big : Item
+public class Big : Interactable
 {
-    public void interact(){
+    public void Interact(){
+
+    }
+
+    public void Break(){
 
     }
 }

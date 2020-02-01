@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SimpleTimed : Simple
 {
-    public override void interact(){
+    public int holdDuration {get;set;}
+
+    public override void Interact(){
         
     }
 }

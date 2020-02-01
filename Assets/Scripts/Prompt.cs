@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Prompt : Breakable
+public class Prompt : MonoBehaviour, Breakable
 {
-    public void interact(){
+
+    
+    public void Interact(){
         
+    }
+
+    public void Break(){
+
     }
 }

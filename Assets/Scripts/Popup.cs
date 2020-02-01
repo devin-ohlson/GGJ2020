@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Popup : Breakable
+public class Popup : MonoBehaviour, Breakable
 {
-    public void interact(){
+    public void Interact(){
         
+    }
+
+    public void Break(){
+
     }
 }
