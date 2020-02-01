@@ -5,45 +5,45 @@ using System;
 
 public class StairCtrl : MonoBehaviour, Interactable
 {
-    [SerializeField] private StairCtrl up = null;
-    [SerializeField] private StairCtrl down = null;
-    
-    void Start()
-    {
-        if ((null != up && this != up.down) || (null != down && this != down.up))
-            throw new ArgumentException(this.name + " has mismatched stairs.");
-    }
+	[SerializeField] private StairCtrl up = null;
+	[SerializeField] private StairCtrl down = null;
+	
+	void Start()
+	{
+		if ((null != up && this != up.down) || (null != down && this != down.up))
+			throw new ArgumentException(this.name + " has mismatched stairs.");
+	}
 
-    void Travel(Transform obj, bool isGoingUp)
-    {
-        StairCtrl destination = (isGoingUp) ? up : down;
+	void Travel(Transform obj, bool isGoingUp)
+	{
+		StairCtrl destination = (isGoingUp) ? up : down;
 
-        if (destination != null)
-        {
-            Vector3 diff = obj.position - transform.position;
+		if (destination != null)
+		{
+			Vector3 diff = obj.position - transform.position;
 
-            obj.position = diff + destination.transform.position;
-        }
-    }
+			obj.position = diff + destination.transform.position;
+		}
+	}
 
-    public void Interact(CharacterCtrl controller)
-    {
-        Travel(controller.transform, Input.GetAxisRaw("Vertical") > 0);
-    }
+	public void Interact(CharacterCtrl controller)
+	{
+		Travel(controller.transform, Input.GetAxisRaw("Vertical") > 0);
+	}
 
-    public bool Reset()
-    {
-        return false; // Interactions can't be stopped.
-    }
+	public bool Reset()
+	{
+		return false; // Interactions can't be stopped.
+	}
 
-    public bool TryInteract(CharacterCtrl controller)
-    {
-        if (Input.GetAxisRaw("Vertical") != 0)
-        {
-            Travel(controller.transform, Input.GetAxisRaw("Vertical") > 0);
-            return true;
-        }
-        else
-            return false;
-    }
+	public bool TryInteract(CharacterCtrl controller)
+	{
+		if (Input.GetAxisRaw("Vertical") != 0)
+		{
+			Travel(controller.transform, Input.GetAxisRaw("Vertical") > 0);
+			return true;
+		}
+		else
+			return false;
+	}
 }

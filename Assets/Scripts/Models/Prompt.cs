@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class Prompt : Breakable
 {
-    protected override IEnumerator StartRepairing()
-    {
-        throw new System.NotImplementedException();
-    }
+	protected override IEnumerator StartRepairing()
+	{
+		throw new System.NotImplementedException();
+	}
 
-    protected override void StopRepairing()
-    {
-        throw new System.NotImplementedException();
-    }
+	protected override void StopRepairing()
+	{
+		throw new System.NotImplementedException();
+	}
 
-    // Prompts always start their interaction
-    public override bool TryInteract(CharacterCtrl controller)
-    {
-        Interact(controller);
-        return true;
-    }
+	// Prompts always start their interaction
+	public override bool TryInteract(CharacterCtrl controller)
+	{
+		Interact(controller);
+		return true;
+	}
 }
