@@ -45,7 +45,6 @@ public class StairCtrl : MonoBehaviour, Interactable
 	{
 		if (Input.GetButtonDown("Vertical"))
 		{
-			Debug.Log("Triggered");
 			Travel(controller.transform, Input.GetAxisRaw("Vertical") > 0);
 			return true;
 		}
