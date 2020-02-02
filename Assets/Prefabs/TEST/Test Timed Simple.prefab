@@ -219,9 +219,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87521484b55c92ec3ada140b6a32050f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breaking: {fileID: 0}
-  repairing: {fileID: 0}
+  parentRoom: {fileID: 0}
+  breaking: {fileID: 8300000, guid: ff9131f2092e9f244892d612e356e11b, type: 3}
+  repairing: {fileID: 8300000, guid: 6f620e471e3b82d479f60bf533e1eaf2, type: 3}
   repaired: {fileID: 0}
+  fixedSprite: {fileID: 0}
+  brokenSprite: {fileID: 0}
   holdDuration: 2.5
   actionAnimation: {fileID: 5942476182680920173}
 --- !u!1001 &9089770405089600753
