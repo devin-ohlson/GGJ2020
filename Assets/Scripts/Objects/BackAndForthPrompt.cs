@@ -12,8 +12,7 @@ public class BackAndForthPrompt : Prompt
 	[SerializeField] private SpriteRenderer bar = null;
 	[Range(0, 1)]
 	[SerializeField] private float barSizeMod = 0.5f;
-
-	private int previousEdge = 0;
+	
 	private float previousMouseX;
 	private Vector3 previousBallPos;
 
@@ -40,7 +39,6 @@ public class BackAndForthPrompt : Prompt
 	protected override void StopRepairing()
 	{
 		base.StopRepairing();
-		previousEdge = 0;
 		UpdateBar();
 	}
 
