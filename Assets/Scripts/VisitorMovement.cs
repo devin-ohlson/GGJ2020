@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCVisitor : MonoBehaviour {
+public class VisitorMovement : MonoBehaviour {
 	[SerializeField] private float walkSpeed;
 	
 	[SerializeField] private float timeInRoom;
@@ -10,13 +10,20 @@ public class NPCVisitor : MonoBehaviour {
 	[SerializeField] private float movementStateDuration;
 	private float remainingStateTime;
 
+
+	public float timeMod;
+	public float sizeMod;
+	private float rotationTimer;
+
 	[SerializeField] private Room currentRoom;
 	private StairCtrl roomStairs;
 
 	private Rigidbody2D rb;
+	private SpriteRenderer spriteRenderer;
+	private VisitorEmotion emotions;
 
 	private State currentState;
-	private Direction walkingDirection = Direction.Right;
+	private Direction desiredDirection = Direction.Right;
 
 	private enum State {
 		Idle,
@@ -28,6 +35,8 @@ public class NPCVisitor : MonoBehaviour {
 
 	private void Start() {
 		rb = GetComponent<Rigidbody2D>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
+		emotions = GetComponent<VisitorEmotion>();
 
 		currentState = State.IdleWalk;
 		remainingTimeInRoom = timeInRoom;
@@ -38,10 +47,14 @@ public class NPCVisitor : MonoBehaviour {
 		if (currentState == State.EnteringRoom || currentState == State.ExitingRoom)
 			SwitchRooms();
 		else {
-			if (currentState == State.IdleWalk)
-				IdleWalk();
-			else
+			if (currentState == State.IdleWalk) {
+				Walk(desiredDirection);
+				IdleWalkCheckBounds();
+			}
+			else {
 				rb.velocity = new Vector2(0, 0);
+				transform.rotation = new Quaternion();
+			}
 
 			//Switches between stationary and walking within room
 			remainingStateTime -= Time.deltaTime;
@@ -51,26 +64,26 @@ public class NPCVisitor : MonoBehaviour {
 				else if (currentState == State.IdleWalk)
 					currentState = State.Idle;
 				remainingStateTime = movementStateDuration;
-				walkingDirection = (Random.Range(0, 2) == 0 ? Direction.Left : Direction.Right);
+				desiredDirection = (Random.Range(0, 2) == 0 ? Direction.Left : Direction.Right);
 			}
 
 			remainingTimeInRoom -= Time.deltaTime;
 			if(remainingTimeInRoom < 0) {
-				walkingDirection = currentRoom.GetConnectingDirection();
+				desiredDirection = currentRoom.GetConnectingDirection();
 				currentState = State.ExitingRoom;
 			}
 		}
 	}
 
 	private void SwitchRooms() {
-		if (walkingDirection == Direction.Right || walkingDirection == Direction.Left) {
-			rb.velocity = new Vector2(walkSpeed * (walkingDirection == Direction.Right ? 1 : -1), 0);
+		if (desiredDirection == Direction.Left || desiredDirection == Direction.Right) {
+			Walk(desiredDirection);
 		}
 		else {
 			if (transform.position.x < roomStairs.transform.position.x)
-				rb.velocity = new Vector2(walkSpeed, 0);
+				Walk(Direction.Right);
 			else
-				rb.velocity = new Vector2(-walkSpeed, 0);
+				Walk(Direction.Left);
 		}
 
 		//Once the player has entered the new room, walk close to the center
@@ -81,12 +94,29 @@ public class NPCVisitor : MonoBehaviour {
 		}
 	}
 
-	private void IdleWalk() {
-		rb.velocity = new Vector2(walkSpeed * (walkingDirection == Direction.Right ? 1 : -1), 0);
-		//Flip it around if it's too far from center
+	private void Walk(Direction direction) {
+		switch (direction) {
+			case Direction.Right:
+				rb.velocity = new Vector2(walkSpeed, 0);
+				spriteRenderer.flipX = true;
+				break;
+			case Direction.Left:
+				rb.velocity = new Vector2(-walkSpeed, 0);
+				spriteRenderer.flipX = false;
+				break;
+		}
+
+		float rotation = 0;
+		rotationTimer += Time.deltaTime * timeMod;
+		rotation = Mathf.Sin(rotationTimer) * sizeMod;
+		transform.Rotate(new Vector3(0, 0, rotation));
+	}
+
+	//Flip it around if it's too far from room center
+	private void IdleWalkCheckBounds() {
 		if (Vector2.Distance(transform.position, currentRoom.transform.position) > currentRoom.RoomWidth / 2) {
-			walkingDirection = DirectionMethods.OppositeDirection(walkingDirection);
-			rb.velocity = new Vector2(walkSpeed * (walkingDirection == Direction.Right ? 1 : -1) * 2, 0);
+			desiredDirection = DirectionMethods.OppositeDirection(desiredDirection);
+			rb.velocity = new Vector2(walkSpeed * (desiredDirection == Direction.Right ? 1 : -1) * 2, 0);
 		}
 	}
 
@@ -95,23 +125,28 @@ public class NPCVisitor : MonoBehaviour {
 		roomStairs = currentRoom.GetStairs();
 		remainingTimeInRoom = timeInRoom;
 		remainingStateTime = movementStateDuration;
+		emotions.SearchRoom(newRoom);
 
 		if (transform.position.x < currentRoom.transform.position.x)
-			walkingDirection = Direction.Right;
+			desiredDirection = Direction.Right;
 		else
-			walkingDirection = Direction.Left;
+			desiredDirection = Direction.Left;
 
 		currentState = State.EnteringRoom;
 	}
 
 	public void EnterStairs(StairCtrl stairs, bool canGoUp, bool canGoDown) {
 		if (currentState == State.ExitingRoom) {
-			if (walkingDirection == Direction.Up) {
+			if (desiredDirection == Direction.Up) {
 				stairs.Travel(transform, true);
 			}
-			else if(walkingDirection == Direction.Down) {
+			else if(desiredDirection == Direction.Down) {
 				stairs.Travel(transform, false);
 			}
 		}
+	}
+
+	public void LeaveHouse() {
+		//Gonna put more in here once I have the full house to work with
 	}
 }

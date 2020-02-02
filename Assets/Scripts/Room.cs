@@ -52,7 +52,7 @@ public class Room : MonoBehaviour {
 			StartCoroutine(RoomFade(false));
 		}
 		else if (collision.gameObject.tag == "Visitor") {
-			collision.gameObject.GetComponent<NPCVisitor>().EnterRoom(this);
+			collision.gameObject.GetComponent<VisitorMovement>().EnterRoom(this);
 			HasVisitor = true;
 		}
 	}

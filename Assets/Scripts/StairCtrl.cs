@@ -28,7 +28,7 @@ public class StairCtrl : MonoBehaviour, Interactable
 
 	private void OnTriggerStay2D(Collider2D collision) {
 		if(collision.gameObject.tag == "Visitor") {
-			collision.gameObject.GetComponent<NPCVisitor>().EnterStairs(this, up != null, down != null);
+			collision.gameObject.GetComponent<VisitorMovement>().EnterStairs(this, up != null, down != null);
 		}
 	}
 	public void Interact(CharacterCtrl controller)
