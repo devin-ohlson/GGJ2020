@@ -15,6 +15,7 @@ public class Room : MonoBehaviour {
 	private StairCtrl stairs;
 
 	public bool CurrentRoom;
+	public bool HasVisitor;
 	public bool LightsPowered = true;
 
 	//Stuff for blacking the room out
@@ -50,14 +51,19 @@ public class Room : MonoBehaviour {
 			StopAllCoroutines();
 			StartCoroutine(RoomFade(false));
 		}
-		else if(collision.gameObject.tag == "Visitor")
+		else if (collision.gameObject.tag == "Visitor") {
 			collision.gameObject.GetComponent<NPCVisitor>().EnterRoom(this);
+			HasVisitor = true;
+		}
 	}
 	private void OnTriggerExit2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
 			CurrentRoom = false;
 			StopAllCoroutines();
 			StartCoroutine(RoomFade(true));
+		}
+		else if(collision.gameObject.tag == "Visitor") {
+			HasVisitor = false;
 		}
 	}
 

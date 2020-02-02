@@ -9,7 +9,9 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	private Animator animator;
 	private AudioSource audioSource;
 	private Collider2D interactCollider;
-	private SpriteRenderer renderer;
+	private SpriteRenderer spriteRenderer;
+	public Room parentRoom;
+
 	protected Ghost ghost;
 
 	public AudioClip breaking;
@@ -25,7 +27,8 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
 		interactCollider = GetComponent<Collider2D>();
-		renderer = GetComponent<SpriteRenderer>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
+		parentRoom = GetComponentInParent<Room>();
 		ghost = FindObjectOfType<Ghost>();
 		this.interactCollider.enabled = false;
 		IsInteracting = false;
@@ -52,7 +55,6 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		audioSource.Play();
 	}
 
-	virtual
 	protected void SetBroken(bool isBroken)
 	{
 		//Swap sprites
@@ -72,6 +74,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		RepairedSound();
 	}
 
+	virtual
 	public void Break()
 	{
 		SetBroken(true);
