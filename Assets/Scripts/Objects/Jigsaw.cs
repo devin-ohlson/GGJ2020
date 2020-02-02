@@ -10,13 +10,14 @@ public class Jigsaw : Popup
     [SerializeField] public GameObject assembledBoard;
     private Sprite[] solution;
 
-    protected override void Awake(){
+    protected override void Start(){  
+        base.Start();
+        Debug.Log("Jigsaw Awake");
         solution = (Sprite[])images.Clone();
         for(int i = 0; i < solution.Length; i++){
             Debug.Log(solution[i].name);
         }
-        GenerateJigsaw();
-        base.Awake();
+        GenerateJigsaw(); 
     }
 
     public void Update(){

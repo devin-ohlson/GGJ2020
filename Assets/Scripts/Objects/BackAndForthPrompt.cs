@@ -16,7 +16,7 @@ public class BackAndForthPrompt : Prompt
 	private float previousMouseX;
 	private Vector3 previousBallPos;
 
-	private void Start()
+	protected override void Start()
 	{
 		if (null == leftEdge || null == rightEdge || null == bar || null == ball)
 			throw new ArgumentException(this.name + " needs both edges, the bar, and the ball for the prompt to be specified!");
@@ -27,6 +27,7 @@ public class BackAndForthPrompt : Prompt
 			leftEdge = rightEdge;
 			rightEdge = tmp;
 		}
+		base.Start();
 	}
 
 	protected override IEnumerator StartRepairing()

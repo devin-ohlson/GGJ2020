@@ -4,9 +4,24 @@ using UnityEngine;
 
 public class CharacterCtrl : MonoBehaviour, MovementFreezable
 {
-    private Rigidbody2D rb;
+	private Rigidbody2D rb;
+	private Vector3 roomPosition;
 	private SpriteRenderer spriteRenderer;
-    [SerializeField] private float walkSpeed = 5;
+	private bool cameraAnchored = false;
+	public GameObject anchor;
+	[SerializeField] private float minRangeToTransform;
+	[SerializeField] private float lerpSpeed;
+	private float initialZ;
+	private CameraController mainCam;
+	[SerializeField]
+	float zoomFactor = 1.0f;
+
+	[SerializeField]
+	float zoomSpeed = 5.0f;
+	private float originalSize = 0f;
+
+
+	[SerializeField] private float walkSpeed = 5;
 
 	public float wobTimeMod;
 	public float wobSizeMod;
@@ -15,13 +30,53 @@ public class CharacterCtrl : MonoBehaviour, MovementFreezable
 	private bool frozen = false;
 
 	void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
+	{
+		Debug.Log(Camera.main.fieldOfView);
+		rb = GetComponent<Rigidbody2D>();
+		mainCam = Camera.main.gameObject.GetComponent<CameraController>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-    
-    void FixedUpdate()
-    {
+	}
+	
+	void Update(){
+		if (Input.GetKeyDown(KeyCode.Q)) {
+			if (!mainCam.CurrentlyZooming) {
+				if (cameraAnchored) {
+					mainCam.LerpToPosition(roomPosition);
+					mainCam.Zoom(1);
+					cameraAnchored = false;
+					FreezeMovement(false);
+				}
+				else if(!frozen){
+					roomPosition = mainCam.gameObject.transform.position;
+					mainCam.LerpToPosition(anchor.transform.position);
+					mainCam.Zoom(3);
+					cameraAnchored = true;
+					FreezeMovement(true);
+				}
+			}
+		}
+	}
+
+	public void LerpToPosition(Vector3 target, int fov) {
+		StopAllCoroutines();
+		StartCoroutine(LerpToPositionCoroutine(target, fov));
+	}
+	
+	private IEnumerator LerpToPositionCoroutine(Vector3 targetPosition, int fov) {
+		while(Vector3.Distance(transform.position, targetPosition) > minRangeToTransform) {
+			transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed);
+
+			Camera.main.fieldOfView = fov;
+
+			Vector3 fixedZ = transform.position;
+			fixedZ.z = initialZ;
+			transform.position = fixedZ;
+			yield return new WaitForEndOfFrame();
+		}
+	}
+
+	void FixedUpdate()
+	{
 		if (!frozen) {
 			float movement = (Input.GetAxis("Horizontal") != 0) ? Input.GetAxis("Horizontal") * walkSpeed : 0;
 
@@ -51,21 +106,21 @@ public class CharacterCtrl : MonoBehaviour, MovementFreezable
 		frozen = freeze;
 	}
 
-    private void OnTriggerStay2D(Collider2D collider)
-    {
-        Interactable interactable = collider.GetComponent<Interactable>();
-        if (interactable != null)
-        {
-            interactable.TryInteract(this);
-        }
-    }
+	private void OnTriggerStay2D(Collider2D collider)
+	{
+		Interactable interactable = collider.GetComponent<Interactable>();
+		if (interactable != null)
+		{
+			interactable.TryInteract(this);
+		}
+	}
 
-    private void OnTriggerExit2D(Collider2D collider)
-    {
-        Interactable interactable = collider.GetComponent<Interactable>();
-        if (interactable != null)
-        {
-            interactable.Reset();
-        }
-    }
+	private void OnTriggerExit2D(Collider2D collider)
+	{
+		Interactable interactable = collider.GetComponent<Interactable>();
+		if (interactable != null)
+		{
+			interactable.Reset();
+		}
+	}
 }
