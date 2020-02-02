@@ -9,6 +9,9 @@ public class FollowObject : MonoBehaviour
 
     void LateUpdate()
     {
-		transform.position = toFollow.position + diff;
+		if (toFollow == null)
+			GameObject.Destroy(this.gameObject);
+		else
+			transform.position = toFollow.position + diff;
     }
 }

@@ -30,7 +30,7 @@ public class VisitorEmotion : MonoBehaviour
 
 	public int Score()
 	{
-		return Mathf.RoundToInt(bonusHappyScore * happiness);
+		return 25 * Mathf.RoundToInt(bonusHappyScore * happiness);
 	}
 
 	public bool PerfectHappiness()
@@ -105,7 +105,7 @@ public class VisitorEmotion : MonoBehaviour
 
 		if (0 == happiness)
 		{
-			movement.LeaveHouse();
+			movement.FocusOnLeaving();
 			happinessFailed = true;
 		}
 	}

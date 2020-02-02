@@ -44,7 +44,11 @@ public class VisitorMovement : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
-		if (currentState == State.EnteringRoom || currentState == State.ExitingRoom)
+		if (currentState == State.Leaving)
+		{
+			LeaveHouse();
+		}
+		else if (currentState == State.EnteringRoom || currentState == State.ExitingRoom)
 			SwitchRooms();
 		else {
 			if (currentState == State.IdleWalk) {
@@ -132,7 +136,7 @@ public class VisitorMovement : MonoBehaviour {
 		else
 			desiredDirection = Direction.Left;
 
-		currentState = State.EnteringRoom;
+		if (currentState != State.Leaving) currentState = State.EnteringRoom;
 	}
 
 	public void EnterStairs(StairCtrl stairs, bool canGoUp, bool canGoDown) {
@@ -146,7 +150,7 @@ public class VisitorMovement : MonoBehaviour {
 		}
 	}
 
-	public void LeaveHouse() {
+	private void LeaveHouse() {
 		List<Direction> roomConnections = currentRoom.ConnectionDirections;
 		//Can only be > 1 if it has stairs in our house layout
 		if(roomConnections.Count > 1) {
@@ -159,7 +163,12 @@ public class VisitorMovement : MonoBehaviour {
 		}
 		//Later will have to make it walk to the door
 		if (currentRoom.IsStartingRoom) {
-			Destroy(this.gameObject);
+			GameManager.Instance().CompleteVisitor();
 		}
+	}
+
+	public void FocusOnLeaving()
+	{
+		currentState = State.Leaving;
 	}
 }
