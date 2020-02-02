@@ -5,8 +5,7 @@ using UnityEngine;
 public class Room : MonoBehaviour {
 	public bool IsStartingRoom;
 	[SerializeField] private List<Direction> connectionDirections;
-	private bool[] connectionsArray;
-	private float[] weightsArray;
+	[SerializeField] private float[] weightsArray;
 	public float RoomWidth = 3;
 
 	private Breakable[] breakables;
