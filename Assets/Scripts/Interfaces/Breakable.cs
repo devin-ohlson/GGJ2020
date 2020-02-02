@@ -9,10 +9,14 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	private Animator animator;
 	private AudioSource audioSource;
 	private Collider2D interactCollider;
+	private SpriteRenderer renderer;
 
 	public AudioClip breaking;
 	public AudioClip repairing;
 	public AudioClip repaired;
+
+	public Sprite fixedSprite, brokenSprite;
+
 
 	private bool isInteracting;
 
@@ -21,6 +25,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
 		interactCollider = GetComponent<Collider2D>();
+		renderer = GetComponent<SpriteRenderer>();
 		this.interactCollider.enabled = false;
 		isInteracting = false;
 
@@ -48,11 +53,15 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		audioSource.Play();
 	}
 
-	private void SetBroken(bool isBroken)
+	virtual
+	protected void SetBroken(bool isBroken)
 	{
-		// Do some animator thingy so that object is now in broken/repaired state?
-		//animator.SetBool("isBroken", isBroken);
+		//Swap sprites
 		interactCollider.enabled = isBroken; // Don't need to interact with repaired items
+		if (isBroken)
+			renderer.sprite = brokenSprite;
+		else
+			renderer.sprite = fixedSprite;
 	}
 
 	// Should be called on a successful repair
@@ -73,7 +82,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 
 	public bool IsBroken()
 	{
-		return true;// animator.GetBool("isBroken");
+		return true;
 	}
 
 	// When interacted with, Breakables start repairing

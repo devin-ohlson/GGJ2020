@@ -6,17 +6,21 @@ public class Room : MonoBehaviour {
 	public bool IsStartingRoom;
 	[SerializeField] private List<Direction> connectionDirections;
 	private bool[] connectionsArray;
-
 	public float RoomWidth = 3;
 
 	private Breakable[] breakables;
+	
 	private CameraController mainCam;
 	private StairCtrl stairs;
+
+	private bool currentRoom;
+	public bool LightsPowered = true;
 
 	//Stuff for blacking the room out
 	[SerializeField] private SpriteRenderer blackOverlay;
 	[SerializeField] private float blackoutDuration = 0.75f;
 	[SerializeField] private float blackoutOpacity = 0.8f;
+	[SerializeField] private float powerOutModifier = 0.3f;
 
 	void Start() {
 		breakables = GetComponentsInChildren<Breakable>();
@@ -40,6 +44,7 @@ public class Room : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
 			mainCam.LerpToPosition(transform.position);
+			currentRoom = true;
 			StopAllCoroutines();
 			StartCoroutine(RoomFade(false));
 		}
@@ -48,6 +53,7 @@ public class Room : MonoBehaviour {
 	}
 	private void OnTriggerExit2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
+			currentRoom = false;
 			StopAllCoroutines();
 			StartCoroutine(RoomFade(true));
 		}
@@ -55,10 +61,14 @@ public class Room : MonoBehaviour {
 
 	private IEnumerator RoomFade(bool fadeOut) {
 		float timer = 0;
+		//It only turns half on if the power is out
+		float lightModifier = 1;
+		if (!fadeOut && !LightsPowered)
+			lightModifier = powerOutModifier;
 
-		while (timer < blackoutDuration) {
+		while (timer < blackoutDuration && blackOverlay.color.a < blackoutOpacity) {
 			Color newColor = blackOverlay.color;
-			newColor.a += Time.deltaTime * (blackoutOpacity / blackoutDuration) * (fadeOut ? 1 : -1);
+			newColor.a += (Time.deltaTime * (blackoutOpacity / blackoutDuration) * (fadeOut ? 1 : -1)) * lightModifier;
 			blackOverlay.color = newColor;
 
 			timer += Time.deltaTime;
@@ -66,7 +76,7 @@ public class Room : MonoBehaviour {
 		}
 
 		Color finalColor = blackOverlay.color;
-		finalColor.a = (fadeOut ? blackoutOpacity : 0);
+		finalColor.a = (fadeOut ? blackoutOpacity : blackoutOpacity - blackoutOpacity * lightModifier);
 		blackOverlay.color = finalColor;
 	}
 
@@ -82,5 +92,18 @@ public class Room : MonoBehaviour {
 
 	public StairCtrl GetStairs() {
 		return stairs;
+	}
+
+	//Stuff for the fuses:
+	public void SetLightPower(bool on) {
+		LightsPowered = on;
+		if (currentRoom) {
+			Color newBlack = blackOverlay.color;
+			if (LightsPowered)
+				newBlack.a = 0;
+			else
+				newBlack.a = blackoutOpacity / 2;
+			blackOverlay.color = newBlack;
+		}
 	}
 }

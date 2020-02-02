@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Popup : Breakable
 {
+	private Canvas canvas;
 
-	public Canvas canvas;
+	private void Start() {
+		canvas = GetComponentInChildren<Canvas>();
+	}
 
 	// Starting the repair happens instantly, but the repair should be called 
 	protected override IEnumerator StartRepairing()
