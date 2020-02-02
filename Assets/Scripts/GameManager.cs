@@ -59,6 +59,27 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	public void Repaired(BreakableLevel level)
+	{
+		int boost = 0;
+		switch (level)
+		{
+			case BreakableLevel.CLICK:
+				boost = 25;
+				break;
+			case BreakableLevel.TIMED:
+				boost = 75;
+				break;
+			case BreakableLevel.MOTION:
+				boost = 150;
+				break;
+			case BreakableLevel.PUZZLE:
+				boost = 200;
+				break;
+		}
+		score += boost;
+	}
+
 	// Called by visitor once it reaches door
 	public void CompleteVisitor()
 	{
