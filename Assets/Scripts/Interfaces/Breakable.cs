@@ -10,13 +10,13 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	private AudioSource audioSource;
 	private Collider2D interactCollider;
 	private SpriteRenderer renderer;
+	protected Ghost ghost;
 
 	public AudioClip breaking;
 	public AudioClip repairing;
 	public AudioClip repaired;
 
 	public Sprite fixedSprite, brokenSprite;
-
 
 	private bool isInteracting;
 
@@ -26,10 +26,11 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		audioSource = GetComponent<AudioSource>();
 		interactCollider = GetComponent<Collider2D>();
 		renderer = GetComponent<SpriteRenderer>();
+		ghost = FindObjectOfType<Ghost>();
 		this.interactCollider.enabled = false;
 		isInteracting = false;
 
-		Break();
+		//Break();
 	}
 
 	private void BreakSound()
@@ -58,16 +59,17 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	{
 		//Swap sprites
 		interactCollider.enabled = isBroken; // Don't need to interact with repaired items
-		if (isBroken)
+		/*if (isBroken)
 			renderer.sprite = brokenSprite;
 		else
-			renderer.sprite = fixedSprite;
+			renderer.sprite = fixedSprite;*/
 	}
-
+	
 	// Should be called on a successful repair
 	protected void Repair()
 	{
         Debug.Log("Repaired");
+		ghost.ObjectRepaired(this);
 		SetBroken(false);
 		RepairedSound();
 	}
