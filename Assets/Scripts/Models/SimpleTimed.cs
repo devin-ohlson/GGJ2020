@@ -27,7 +27,7 @@ public class SimpleTimed : Simple
 
 		while (true)
 		{
-			actionAnimation.Activate(Input.GetButtonDown("Interact"));
+			actionAnimation.Activate(Input.GetButton("Interact"));
 			yield return null;
 		}
 	}
