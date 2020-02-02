@@ -22,8 +22,9 @@ public abstract class Breakable : MonoBehaviour, Interactable
 
 	protected bool IsInteracting { get; private set; }
 
-	protected virtual void Awake()
+	protected virtual void Start()
 	{
+		Debug.Log("Breakable Awake called");
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
 		interactCollider = GetComponent<Collider2D>();
@@ -68,6 +69,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	// Should be called on a successful repair
 	protected virtual void Repair()
 	{
+		Debug.Log("Breakable Repair() called");
 		ghost.ObjectRepaired(this);
 		IsInteracting = false;
 		SetBroken(false);

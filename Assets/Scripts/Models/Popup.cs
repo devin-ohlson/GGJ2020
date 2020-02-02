@@ -6,7 +6,9 @@ public class Popup : Breakable
 {
 	private Canvas canvas;
 
-	private void Start() {
+	protected override void Start() {
+		base.Start();
+		Debug.Log("Start of Popup called");
 		canvas = GetComponentInChildren<Canvas>();
 	}
 
@@ -15,7 +17,7 @@ public class Popup : Breakable
 	{
 		canvas.gameObject.SetActive(true);
 		// Need to do popup specific data initializing
-		return null;
+		yield return null;
 	}
 
 	protected override void StopRepairing()

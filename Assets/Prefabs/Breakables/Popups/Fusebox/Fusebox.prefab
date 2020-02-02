@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 3204425947617103389}
   - component: {fileID: 4774109666673523687}
   m_Layer: 0
-  m_Name: FuseBox
+  m_Name: Fusebox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,7 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5a4724aeb3b78d5a798706fea21ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 3035273572972417254}
 --- !u!1 &7445990548200819366
 GameObject:
   m_ObjectHideFlags: 0
