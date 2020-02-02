@@ -11,6 +11,7 @@ public class AlertController : MonoBehaviour
     void Start()
     {
         alertIcon = GetComponent<Image>();
+        DeActivateAlert();
     }
 
     void Update(){

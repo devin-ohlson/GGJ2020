@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Room : MonoBehaviour {
 	public bool IsStartingRoom;
@@ -18,11 +19,13 @@ public class Room : MonoBehaviour {
 	public bool HasVisitor;
 	public bool LightsPowered = true;
 
+	private int broken;
 	//Stuff for blacking the room out
 	[SerializeField] private SpriteRenderer blackOverlay;
 	[SerializeField] private float blackoutDuration = 0.75f;
 	[SerializeField] private float blackoutOpacity = 0.8f;
 	[SerializeField] private float powerOutModifier = 0.3f;
+	[SerializeField] public Image alertImage;
 
 	void Start() {
 		breakables = GetComponentsInChildren<Breakable>();
@@ -131,5 +134,16 @@ public class Room : MonoBehaviour {
 	public bool IsBroken()
 	{
 		return new List<Breakable>(GetBreakables()).Find((breakable) => breakable.IsBroken()) != null;
+	}
+
+	public void AdjustBroken(int broken){
+		this.broken = this.broken + broken;
+		AlertController alerts = alertImage.gameObject.GetComponent<AlertController>();
+		if(this.broken > 0){
+			alerts.ActivateAlert();
+		}
+		else if(this.broken < 1){
+			alerts.DeActivateAlert();
+		}
 	}
 }
