@@ -12,6 +12,9 @@ public class BreakableLight : Breakable {
 	protected override void SetBroken(bool isBroken) {
 		base.SetBroken(isBroken);
 		parentRoom.SetLightPower(!isBroken);
+
+		if (!isBroken)
+			ghost.ObjectRepaired(this);
 	}
 
 	protected override IEnumerator StartRepairing() {

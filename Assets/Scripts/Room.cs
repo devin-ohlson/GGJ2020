@@ -9,11 +9,12 @@ public class Room : MonoBehaviour {
 	public float RoomWidth = 3;
 
 	private Breakable[] breakables;
+	private BreakableLight breakableLight;
 	
 	private CameraController mainCam;
 	private StairCtrl stairs;
 
-	private bool currentRoom;
+	public bool CurrentRoom;
 	public bool LightsPowered = true;
 
 	//Stuff for blacking the room out
@@ -24,6 +25,7 @@ public class Room : MonoBehaviour {
 
 	void Start() {
 		breakables = GetComponentsInChildren<Breakable>();
+		breakableLight = GetComponentInChildren<BreakableLight>();
 		mainCam = Camera.main.gameObject.GetComponent<CameraController>();
 
 		stairs = GetComponentInChildren<StairCtrl>();
@@ -44,7 +46,7 @@ public class Room : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
 			mainCam.LerpToPosition(transform.position);
-			currentRoom = true;
+			CurrentRoom = true;
 			StopAllCoroutines();
 			StartCoroutine(RoomFade(false));
 		}
@@ -53,7 +55,7 @@ public class Room : MonoBehaviour {
 	}
 	private void OnTriggerExit2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
-			currentRoom = false;
+			CurrentRoom = false;
 			StopAllCoroutines();
 			StartCoroutine(RoomFade(true));
 		}
@@ -97,7 +99,7 @@ public class Room : MonoBehaviour {
 	//Stuff for the fuses:
 	public void SetLightPower(bool on) {
 		LightsPowered = on;
-		if (currentRoom) {
+		if (CurrentRoom) {
 			Color newBlack = blackOverlay.color;
 			if (LightsPowered)
 				newBlack.a = 0;
