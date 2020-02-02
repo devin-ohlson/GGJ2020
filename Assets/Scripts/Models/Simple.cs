@@ -19,7 +19,7 @@ public class Simple : Breakable
 
 	public override bool TryInteract(CharacterCtrl controller)
 	{
-		if (Input.GetAxisRaw("Interact") != 0)
+		if (Input.GetButtonDown("Interact"))
 		{
 			Interact(controller);
 			return true;
