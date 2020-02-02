@@ -9,11 +9,6 @@ public class CirclePrompt : Prompt
 	private Vector2 previousMouse;
 	private Vector3 previousPromptPos;
 
-	private void Start()
-	{
-		
-	}
-
 	protected override IEnumerator StartRepairing()
 	{
 		previousMouse = WorldMouse();

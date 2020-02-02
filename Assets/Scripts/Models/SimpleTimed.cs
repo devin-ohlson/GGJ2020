@@ -8,9 +8,10 @@ public class SimpleTimed : Simple
 
 	[SerializeField] private CircleFillAnimation actionAnimation = null;
 
-	private void Start()
+	protected override void Start()
 	{
 		actionAnimation.gameObject.SetActive(false);
+		base.Start();
 	}
 
 	public override bool TryInteract(CharacterCtrl controller)
@@ -26,7 +27,7 @@ public class SimpleTimed : Simple
 
 		while (true)
 		{
-			actionAnimation.Activate(Input.GetButtonDown("Interact"));
+			actionAnimation.Activate(Input.GetButton("Interact"));
 			yield return null;
 		}
 	}

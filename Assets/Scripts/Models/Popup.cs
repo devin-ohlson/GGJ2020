@@ -6,21 +6,23 @@ public class Popup : Breakable
 {
 	private Canvas canvas;
 
-	private void Start() {
+	protected override void Start() {
+		base.Start();
+		Debug.Log("Start of Popup called");
 		canvas = GetComponentInChildren<Canvas>();
 	}
 
 	// Starting the repair happens instantly, but the repair should be called 
 	protected override IEnumerator StartRepairing()
 	{
-		canvas.gameObject.SetActive(true);
+		canvas.enabled = true;
 		// Need to do popup specific data initializing
-		return null;
+		yield return null;
 	}
 
 	protected override void StopRepairing()
 	{
-		canvas.gameObject.SetActive(false);
+		canvas.enabled = false;
 		// Need to do popup specific data reseting
 	}
 
@@ -36,7 +38,7 @@ public class Popup : Breakable
 
 	protected override void Repair(){
 		base.Repair();
-		canvas.gameObject.SetActive(false);
+		canvas.enabled = false;
 	}
 
 	public override BreakableLevel Level() => BreakableLevel.PUZZLE;

@@ -23,9 +23,9 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	protected bool IsInteracting { get; private set; }
 
 	[SerializeField] private bool breakOnStart = false;
-
-	protected virtual void Awake()
+	protected virtual void Start()
 	{
+		Debug.Log("Breakable Awake called");
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
 		interactCollider = GetComponent<Collider2D>();
@@ -59,7 +59,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		audioSource.Play();
 	}
 
-	protected void SetBroken(bool isBroken)
+	private void SetBroken(bool isBroken)
 	{
 		//Swap sprites
 		interactCollider.enabled = isBroken; // Don't need to interact with repaired items
@@ -72,6 +72,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	// Should be called on a successful repair
 	protected virtual void Repair()
 	{
+		Debug.Log("Breakable Repair() called");
 		ghost.ObjectRepaired(this);
 		IsInteracting = false;
 		SetBroken(false);
