@@ -19,6 +19,7 @@ public class CharacterCtrl : MonoBehaviour, MovementFreezable
 	[SerializeField]
 	float zoomSpeed = 5.0f;
 	private float originalSize = 0f;
+    [SerializeField]public Canvas miniMap;
 
 
 	[SerializeField] private float walkSpeed = 5;
@@ -43,6 +44,7 @@ public class CharacterCtrl : MonoBehaviour, MovementFreezable
 				if (cameraAnchored) {
 					mainCam.LerpToPosition(roomPosition);
 					mainCam.Zoom(1);
+                    miniMap.gameObject.GetComponent<Canvas>().enabled = false;
 					cameraAnchored = false;
 					FreezeMovement(false);
 				}
@@ -50,6 +52,7 @@ public class CharacterCtrl : MonoBehaviour, MovementFreezable
 					roomPosition = mainCam.gameObject.transform.position;
 					mainCam.LerpToPosition(anchor.transform.position);
 					mainCam.Zoom(3);
+                    miniMap.gameObject.GetComponent<Canvas>().enabled = true;
 					cameraAnchored = true;
 					FreezeMovement(true);
 				}
