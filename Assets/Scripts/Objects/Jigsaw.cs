@@ -12,10 +12,8 @@ public class Jigsaw : Popup
 
     protected override void Start(){  
         base.Start();
-        Debug.Log("Jigsaw Awake");
         solution = (Sprite[])images.Clone();
         for(int i = 0; i < solution.Length; i++){
-            Debug.Log(solution[i].name);
         }
         GenerateJigsaw(); 
     }

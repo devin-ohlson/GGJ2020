@@ -8,7 +8,6 @@ public class Popup : Breakable
 
 	protected override void Start() {
 		base.Start();
-		Debug.Log("Start of Popup called");
 		canvas = GetComponentInChildren<Canvas>();
 	}
 

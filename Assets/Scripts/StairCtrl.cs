@@ -31,6 +31,14 @@ public class StairCtrl : MonoBehaviour, Interactable
 		}
 	}
 
+	public void NPCTravel(Transform obj, bool isGoingUp) {
+		StairCtrl destination = (isGoingUp) ? up : down;
+		if (destination != null) {
+			Vector3 diff = obj.position - transform.position;
+			obj.position = diff + destination.transform.position;
+		}
+	}
+
 	private IEnumerator TravelDelay(Transform obj, Transform destination) {
 		float fadeTimer = 0;
 		SpriteRenderer sRenderer = obj.GetComponent<SpriteRenderer>();

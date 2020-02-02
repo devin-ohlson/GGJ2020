@@ -10,7 +10,6 @@ public class VisitorMovement : MonoBehaviour {
 	[SerializeField] private float movementStateDuration;
 	private float remainingStateTime;
 
-
 	public float timeMod;
 	public float sizeMod;
 	private float rotationTimer;
@@ -48,8 +47,7 @@ public class VisitorMovement : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
-		if (currentState == State.Leaving)
-		{
+		if (currentState == State.Leaving) {
 			LeaveHouse();
 		}
 		else if (currentState == State.EnteringRoom || currentState == State.ExitingRoom)
@@ -66,7 +64,7 @@ public class VisitorMovement : MonoBehaviour {
 
 			//Switches between stationary and walking within room
 			remainingStateTime -= Time.deltaTime;
-			if(remainingStateTime < 0) { 
+			if (remainingStateTime < 0) {
 				if (currentState == State.Idle)
 					currentState = State.IdleWalk;
 				else if (currentState == State.IdleWalk)
@@ -76,7 +74,7 @@ public class VisitorMovement : MonoBehaviour {
 			}
 
 			remainingTimeInRoom -= Time.deltaTime;
-			if(remainingTimeInRoom < 0) {
+			if (remainingTimeInRoom < 0) {
 				desiredDirection = currentRoom.GetConnectingDirection();
 				currentState = State.ExitingRoom;
 			}
@@ -146,10 +144,10 @@ public class VisitorMovement : MonoBehaviour {
 	public void EnterStairs(StairCtrl stairs, bool canGoUp, bool canGoDown) {
 		if (currentState == State.ExitingRoom) {
 			if (desiredDirection == Direction.Up) {
-				stairs.Travel(transform, true);
+				stairs.NPCTravel(transform, true);
 			}
 			else if(desiredDirection == Direction.Down) {
-				stairs.Travel(transform, false);
+				stairs.NPCTravel(transform, false);
 			}
 		}
 	}
