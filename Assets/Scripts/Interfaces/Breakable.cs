@@ -76,6 +76,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		ghost.ObjectRepaired(this);
 		IsInteracting = false;
 		SetBroken(false);
+		parentRoom.AdjustBroken(-1);
 		RepairedSound();
 	}
 
@@ -83,8 +84,8 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	public void Break()
 	{
 		SetBroken(true);
+		parentRoom.AdjustBroken(1);
 		BreakSound();
-
 		// TODO: Popup on map/UI to show that break happened
 	}
 
