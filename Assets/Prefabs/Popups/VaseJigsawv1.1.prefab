@@ -546,7 +546,8 @@ MonoBehaviour:
   breaking: {fileID: 0}
   repairing: {fileID: 0}
   repaired: {fileID: 0}
-  canvas: {fileID: 5153652922190301290}
+  fixedSprite: {fileID: 0}
+  brokenSprite: {fileID: 0}
   images:
   - {fileID: 21300000, guid: 0f250d2b494a5404598a7d896a504c01, type: 3}
   - {fileID: 21300000, guid: 0f250d2b494a5404598a7d896a504c01, type: 3}
@@ -561,6 +562,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8d6e167d233ebff42aba0863cdbfff89, type: 3}
   - {fileID: 21300000, guid: 8d6e167d233ebff42aba0863cdbfff89, type: 3}
   pieces: {fileID: 778975192025485866}
+  assembledBoard: {fileID: 3660236574323916510}
 --- !u!225 &4567679054162094079
 CanvasGroup:
   m_ObjectHideFlags: 0

@@ -17,9 +17,9 @@ public class SlotHandler : MonoBehaviour, IDropHandler
     }
 
     public void OnDrop(PointerEventData eventData){
-        Debug.Log("OnDrop");
+        // Debug.Log("OnDrop");
         if(!item) {
-            Debug.Log("New Parent Set: " + transform);
+            // Debug.Log("New Parent Set: " + transform);
             DragHandler.item.transform.SetParent(transform);
         }
     }
