@@ -18,6 +18,7 @@ public class VisitorEmotion : MonoBehaviour
         
     }
 
+	//VisitorMovement calls this when it enters a new room
 	public void SearchRoom(Room newRoom) {
 		currentRoom = newRoom;
 	}

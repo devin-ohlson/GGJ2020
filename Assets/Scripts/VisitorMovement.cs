@@ -147,6 +147,19 @@ public class VisitorMovement : MonoBehaviour {
 	}
 
 	public void LeaveHouse() {
-		//Gonna put more in here once I have the full house to work with
+		List<Direction> roomConnections = currentRoom.ConnectionDirections;
+		//Can only be > 1 if it has stairs in our house layout
+		if(roomConnections.Count > 1) {
+			desiredDirection = Direction.Down;
+			SwitchRooms();
+		}
+		else {
+			desiredDirection = roomConnections[0];
+			SwitchRooms();
+		}
+		//Later will have to make it walk to the door
+		if (currentRoom.IsStartingRoom) {
+			Destroy(this.gameObject);
+		}
 	}
 }
