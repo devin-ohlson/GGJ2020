@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -53,5 +54,9 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 			transform.position = fixedZ;
 			yield return new WaitForEndOfFrame();
 		}
+    }
+
+    public Image GetImage(){
+        return GetComponent<Image>();
     }
 }
