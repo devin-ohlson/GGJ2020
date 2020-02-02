@@ -30,7 +30,10 @@ public class GameManager : MonoBehaviour
 
 	private int score = 0; // This is the score from BOTH fixing the breakables AND from the visitor's reviews
 	private int perfects = 0; // Stores a combination of 1, 10, and 100 for the three badges in order
-	
+
+
+	public Room startRoom;
+
     void Start()
     {
 		_manager = this;
@@ -121,6 +124,7 @@ public class GameManager : MonoBehaviour
 		// Spawn the next visitor at the door and start its timer
 
 		visitor = GameObject.Instantiate<VisitorMovement>(visitorPrefabs[numberOfVisitors]);
+		visitor.SetRoom(startRoom);
 		if (spawnPoint != null) visitor.transform.position = spawnPoint.position;
 
 		visitorNotifiedToLeave = false;

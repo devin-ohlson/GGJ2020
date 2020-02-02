@@ -43,6 +43,10 @@ public class VisitorMovement : MonoBehaviour {
 		remainingStateTime = movementStateDuration;
 	}
 
+	public void SetRoom(Room room) {
+		currentRoom = room;
+	}
+
 	private void FixedUpdate() {
 		if (currentState == State.Leaving)
 		{
