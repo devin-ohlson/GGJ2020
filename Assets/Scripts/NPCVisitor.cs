@@ -15,28 +15,41 @@ public class NPCVisitor : MonoBehaviour {
 
 	private Rigidbody2D rb;
 
-	private bool exitingRoom = false, switchingRooms, idleWalking = true;
+	private State currentState;
 	private Direction walkingDirection = Direction.Right;
+
+	private enum State {
+		Idle,
+		IdleWalk,
+		EnteringRoom,
+		ExitingRoom,
+		Leaving
+	}
 
 	private void Start() {
 		rb = GetComponent<Rigidbody2D>();
 
+		currentState = State.IdleWalk;
 		remainingTimeInRoom = timeInRoom;
 		remainingStateTime = movementStateDuration;
 	}
 
 	private void FixedUpdate() {
-		if (switchingRooms)
+		if (currentState == State.EnteringRoom || currentState == State.ExitingRoom)
 			SwitchRooms();
 		else {
-			if (idleWalking)
+			if (currentState == State.IdleWalk)
 				IdleWalk();
+			else
+				rb.velocity = new Vector2(0, 0);
 
 			//Switches between stationary and walking within room
 			remainingStateTime -= Time.deltaTime;
-			if(remainingStateTime < 0) {
-				rb.velocity = new Vector2(0, 0);
-				idleWalking = !idleWalking;
+			if(remainingStateTime < 0) { 
+				if (currentState == State.Idle)
+					currentState = State.IdleWalk;
+				else if (currentState == State.IdleWalk)
+					currentState = State.Idle;
 				remainingStateTime = movementStateDuration;
 				walkingDirection = (Random.Range(0, 2) == 0 ? Direction.Left : Direction.Right);
 			}
@@ -44,8 +57,7 @@ public class NPCVisitor : MonoBehaviour {
 			remainingTimeInRoom -= Time.deltaTime;
 			if(remainingTimeInRoom < 0) {
 				walkingDirection = currentRoom.GetConnectingDirection();
-				exitingRoom = true;
-				switchingRooms = true;
+				currentState = State.ExitingRoom;
 			}
 		}
 	}
@@ -62,10 +74,9 @@ public class NPCVisitor : MonoBehaviour {
 		}
 
 		//Once the player has entered the new room, walk close to the center
-		if (!exitingRoom) {
+		if (currentState == State.EnteringRoom) {
 			if (Mathf.Abs(transform.position.x - currentRoom.transform.position.x) < 0.5f) {
-				switchingRooms = false;
-				idleWalking = true;
+				currentState = State.Idle;
 			}
 		}
 	}
@@ -90,11 +101,11 @@ public class NPCVisitor : MonoBehaviour {
 		else
 			walkingDirection = Direction.Left;
 
-		exitingRoom = false;
+		currentState = State.EnteringRoom;
 	}
 
 	public void EnterStairs(StairCtrl stairs, bool canGoUp, bool canGoDown) {
-		if (exitingRoom) {
+		if (currentState == State.ExitingRoom) {
 			if (walkingDirection == Direction.Up) {
 				stairs.Travel(transform, true);
 			}
