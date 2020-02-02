@@ -99,7 +99,10 @@ public class Room : MonoBehaviour {
 		LightsPowered = on;
 		if (currentRoom) {
 			Color newBlack = blackOverlay.color;
-			newBlack.a = blackoutOpacity / 2;
+			if (LightsPowered)
+				newBlack.a = 0;
+			else
+				newBlack.a = blackoutOpacity / 2;
 			blackOverlay.color = newBlack;
 		}
 	}
