@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 	// Singleton to be easily accessible in a scene
 	private static GameManager _manager;
 	public static GameManager Instance() => _manager;
+	private JukeBox jukebox;
 
 	private VisitorMovement visitor;
 	[SerializeField] private VisitorMovement[] visitorPrefabs = { };
@@ -39,6 +40,8 @@ public class GameManager : MonoBehaviour
 		_manager = this;
 		doorbell.loop = false;
 		badgeSmack.loop = false;
+
+		jukebox = FindObjectOfType<JukeBox>();
     }
 
 	private bool visitorNotifiedToLeave = false;
@@ -100,6 +103,7 @@ public class GameManager : MonoBehaviour
 				StartCoroutine(BadgeAnimation());
 			}
 
+			jukebox.PlayMainTheme();
 			GameObject.Destroy(visitor.gameObject);
 		}
 
@@ -128,6 +132,19 @@ public class GameManager : MonoBehaviour
 		if (spawnPoint != null) visitor.transform.position = spawnPoint.position;
 
 		visitorNotifiedToLeave = false;
+
+		//This is so hacky but it was made 4 hours post-jam so whatever.......
+		switch (numberOfVisitors) {
+			case 0:
+				jukebox.PlayCollegeTheme();
+				break;
+			case 1:
+				jukebox.PlayHunterTheme();
+				break;
+			case 2:
+				jukebox.PlayCatsTheme();
+				break;
+		}
 
 		numberOfVisitors++;
 		lastVisitor = gameTime;
