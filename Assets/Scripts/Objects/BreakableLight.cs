@@ -26,4 +26,6 @@ public class BreakableLight : Breakable {
 		Debug.Log("Player shouldn't interact with lights!");
 		return false;
 	}
+
+	public override BreakableLevel Level() => BreakableLevel.PUZZLE; //???
 }

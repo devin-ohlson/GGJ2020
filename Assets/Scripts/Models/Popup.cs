@@ -38,4 +38,6 @@ public class Popup : Breakable
 		base.Repair();
 		canvas.gameObject.SetActive(false);
 	}
+
+	public override BreakableLevel Level() => BreakableLevel.PUZZLE;
 }

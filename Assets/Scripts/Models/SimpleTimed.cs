@@ -44,4 +44,6 @@ public class SimpleTimed : Simple
 		actionAnimation.Reset();
 		actionAnimation.gameObject.SetActive(false);
 	}
+
+	public override BreakableLevel Level() => BreakableLevel.TIMED;
 }

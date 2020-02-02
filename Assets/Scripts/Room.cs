@@ -125,4 +125,11 @@ public class Room : MonoBehaviour {
 			blackOverlay.color = newBlack;
 		}
 	}
+
+	// Temporary (costly) implementation
+	// Returns true iff at least one breakable in the room is broken
+	public bool IsBroken()
+	{
+		return new List<Breakable>(GetBreakables()).Find((breakable) => breakable.IsBroken()) != null;
+	}
 }
