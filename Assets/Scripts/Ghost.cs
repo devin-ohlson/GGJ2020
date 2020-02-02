@@ -95,6 +95,12 @@ public class Ghost : MonoBehaviour {
 	
 	private void CheckBreakableTarget() {
 		if (Vector2.Distance(transform.position, breakableTarget.transform.position) < maxDistanceToGoal) {
+			//Can't break in front of people! Pick a new target
+			if (breakableTarget.parentRoom.HasVisitor) {
+				breakables.Add(breakableTarget);
+				StartMoveToBreakable();
+			}
+
 			currentState = State.Breaking;
 			breakTimer = timeToBreak;
 			animator.SetBool("Breaking", true);
@@ -128,7 +134,7 @@ public class Ghost : MonoBehaviour {
 		if (breakables.Count > 0) {
 			breakableTarget = breakables[0];
 			breakables.RemoveAt(0);
-
+			
 			animator.SetBool("Idle", true);
 			animator.SetBool("Breaking", false);
 			animator.SetBool("Taunting", false);

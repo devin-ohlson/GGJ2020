@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BreakableLight : Breakable {
-	private Room parentRoom;
-
 	void Start() {
 		parentRoom = GetComponentInParent<Room>();
 	}
