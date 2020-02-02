@@ -9,7 +9,6 @@ public class CharacterCtrl : MonoBehaviour, MovementFreezable
 	private SpriteRenderer spriteRenderer;
 	private bool cameraAnchored = false;
 	public GameObject anchor;
-	public CameraZoom cameraZoom;
 	[SerializeField] private float minRangeToTransform;
 	[SerializeField] private float lerpSpeed;
 	private float initialZ;
@@ -36,24 +35,23 @@ public class CharacterCtrl : MonoBehaviour, MovementFreezable
 		rb = GetComponent<Rigidbody2D>();
 		mainCam = Camera.main.gameObject.GetComponent<CameraController>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
-		cameraZoom = Camera.main.gameObject.GetComponent<CameraZoom>();
 	}
 	
 	void Update(){
-		if (!frozen) {
-			if (Input.GetKeyDown(KeyCode.Q)) {
+		if (Input.GetKeyDown(KeyCode.Q)) {
+			if (!mainCam.CurrentlyZooming) {
 				if (cameraAnchored) {
-					Debug.Log("Moving to camera anchor");
 					mainCam.LerpToPosition(roomPosition);
-					cameraZoom.SetZoom(1);
+					mainCam.Zoom(1);
 					cameraAnchored = false;
+					FreezeMovement(false);
 				}
-				else {
-					Debug.Log("Moving to camera to character");
+				else if(!frozen){
 					roomPosition = mainCam.gameObject.transform.position;
 					mainCam.LerpToPosition(anchor.transform.position);
-					cameraZoom.SetZoom(3);
+					mainCam.Zoom(3);
 					cameraAnchored = true;
+					FreezeMovement(true);
 				}
 			}
 		}
