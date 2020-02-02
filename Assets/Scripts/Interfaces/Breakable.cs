@@ -56,7 +56,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		audioSource.Play();
 	}
 
-	protected void SetBroken(bool isBroken)
+	private void SetBroken(bool isBroken)
 	{
 		//Swap sprites
 		interactCollider.enabled = isBroken; // Don't need to interact with repaired items
