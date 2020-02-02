@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 	private int numberOfVisitors = 0;
 	private float gameTime = 0;
 	private float lastVisitor = 0;
-	private int secondsBetweenVisitors = 3;
+	private int secondsBetweenVisitors = 60;
 
 	private int score = 0; // This is the score from BOTH fixing the breakables AND from the visitor's reviews
 	private int perfects = 0; // Stores a combination of 1, 10, and 100 for the three badges in order
