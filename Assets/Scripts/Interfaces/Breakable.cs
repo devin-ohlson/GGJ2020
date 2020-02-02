@@ -57,7 +57,6 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		audioSource.Play();
 	}
 
-	virtual
 	protected void SetBroken(bool isBroken)
 	{
 		//Swap sprites
@@ -78,6 +77,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		RepairedSound();
 	}
 
+	virtual
 	public void Break()
 	{
 		SetBroken(true);

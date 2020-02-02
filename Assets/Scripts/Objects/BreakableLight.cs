@@ -7,12 +7,14 @@ public class BreakableLight : Breakable {
 		parentRoom = GetComponentInParent<Room>();
 	}
 
-	protected override void SetBroken(bool isBroken) {
-		base.SetBroken(isBroken);
-		parentRoom.SetLightPower(!isBroken);
+	public override void Break() {
+		base.Break();
+		parentRoom.SetLightPower(false);
+	}
 
-		if (!isBroken)
-			ghost.ObjectRepaired(this);
+	protected override void Repair() {
+		base.Repair();
+		parentRoom.SetLightPower(true);
 	}
 
 	protected override IEnumerator StartRepairing() {
