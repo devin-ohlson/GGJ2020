@@ -40,4 +40,6 @@ public class Popup : Breakable
 		base.Repair();
 		canvas.enabled = false;
 	}
+
+	public override BreakableLevel Level() => BreakableLevel.PUZZLE;
 }

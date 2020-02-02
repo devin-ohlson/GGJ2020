@@ -44,4 +44,6 @@ public abstract class Prompt : Breakable
 	}
 
 	protected abstract void UpdateProgress();
+
+	public override BreakableLevel Level() => BreakableLevel.MOTION;
 }

@@ -26,4 +26,6 @@ public class Simple : Breakable
 		}
 		return false;
 	}
+
+	public override BreakableLevel Level() => BreakableLevel.CLICK;
 }

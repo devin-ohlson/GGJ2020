@@ -1,6 +1,6 @@
 ﻿public enum BreakableLevel {
-	Simple,
-	SimpleTimed,
-	Prompt,
-	Popup
+	CLICK,
+	TIMED,
+	MOTION,
+	PUZZLE
 }

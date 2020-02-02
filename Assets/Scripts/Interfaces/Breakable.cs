@@ -22,6 +22,7 @@ public abstract class Breakable : MonoBehaviour, Interactable
 
 	protected bool IsInteracting { get; private set; }
 
+	[SerializeField] private bool breakOnStart = false;
 	protected virtual void Start()
 	{
 		Debug.Log("Breakable Awake called");
@@ -33,6 +34,8 @@ public abstract class Breakable : MonoBehaviour, Interactable
 		ghost = FindObjectOfType<Ghost>();
 		this.interactCollider.enabled = false;
 		IsInteracting = false;
+
+		if (breakOnStart) Break();
 	}
 
 	private void BreakSound()
@@ -115,4 +118,6 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	protected abstract IEnumerator StartRepairing();
 	protected abstract void StopRepairing();
 	public abstract bool TryInteract(CharacterCtrl controller);
+
+	public abstract BreakableLevel Level();
 }

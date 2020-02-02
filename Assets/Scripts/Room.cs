@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 	public bool IsStartingRoom;
-	[SerializeField] private List<Direction> connectionDirections;
+	public List<Direction> ConnectionDirections;
 	[SerializeField] private float[] weightsArray;
 	public float RoomWidth = 3;
 
@@ -32,9 +32,9 @@ public class Room : MonoBehaviour {
 		stairs = GetComponentInChildren<StairCtrl>();
 		if(stairs != null) {
 			if (stairs.up != null)
-				connectionDirections.Add(Direction.Up);
+				ConnectionDirections.Add(Direction.Up);
 			if (stairs.down != null)
-				connectionDirections.Add(Direction.Down);
+				ConnectionDirections.Add(Direction.Down);
 		}
 		
 		if (!IsStartingRoom) {
@@ -52,7 +52,7 @@ public class Room : MonoBehaviour {
 			StartCoroutine(RoomFade(false));
 		}
 		else if (collision.gameObject.tag == "Visitor") {
-			collision.gameObject.GetComponent<NPCVisitor>().EnterRoom(this);
+			collision.gameObject.GetComponent<VisitorMovement>().EnterRoom(this);
 			HasVisitor = true;
 		}
 	}
@@ -102,11 +102,11 @@ public class Room : MonoBehaviour {
 		
 		for(int i = 0; i < weightsArray.Length; i++) {
 			if(result < weightsArray[i]) {
-				return connectionDirections[i];
+				return ConnectionDirections[i];
 			}
 			result -= weightsArray[i];
 		}
-		return connectionDirections[0];
+		return ConnectionDirections[0];
 	}
 
 	public StairCtrl GetStairs() {
@@ -124,5 +124,12 @@ public class Room : MonoBehaviour {
 				newBlack.a = blackoutOpacity / 2;
 			blackOverlay.color = newBlack;
 		}
+	}
+
+	// Temporary (costly) implementation
+	// Returns true iff at least one breakable in the room is broken
+	public bool IsBroken()
+	{
+		return new List<Breakable>(GetBreakables()).Find((breakable) => breakable.IsBroken()) != null;
 	}
 }
