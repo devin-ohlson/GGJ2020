@@ -30,12 +30,15 @@ public class CharacterCtrl : MonoBehaviour, MovementFreezable
 
 	private bool frozen = false;
 
+    Animator animator;
+
 	void Start()
 	{
 		Debug.Log(Camera.main.fieldOfView);
 		rb = GetComponent<Rigidbody2D>();
 		mainCam = Camera.main.gameObject.GetComponent<CameraController>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
 	}
 	
 	void Update(){
