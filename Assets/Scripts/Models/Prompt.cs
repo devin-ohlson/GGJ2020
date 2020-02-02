@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class Prompt : Breakable
 {
-	[SerializeField] private SpriteRenderer prompt = null;
+	[SerializeField] protected GameObject prompt = null;
 
-	[SerializeField] private float neededProgress = 5;
+	[SerializeField] protected float neededProgress = 5;
 	protected float progress = 0;
 	
 	protected override IEnumerator StartRepairing()
@@ -31,14 +31,14 @@ public abstract class Prompt : Breakable
 	protected override void StopRepairing()
 	{
 		StopCoroutine(StartRepairing());
-		prompt.gameObject.SetActive(false);
+		prompt.SetActive(false);
 		progress = 0;
 	}
 
 	// Prompts always start their interaction
 	public override bool TryInteract(CharacterCtrl controller)
 	{
-		prompt.gameObject.SetActive(true);
+		prompt.SetActive(true);
 		Interact(controller);
 		return true;
 	}
