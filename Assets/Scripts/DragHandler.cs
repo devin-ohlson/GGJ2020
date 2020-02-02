@@ -34,10 +34,10 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void OnEndDrag (PointerEventData eventData){
-        Debug.Log("OnEndDrag");
+        // Debug.Log("OnEndDrag");
         item = null;
         if (transform.parent.GetComponent<SlotHandler>() != null){
-            Debug.Log("Transforming Position");
+            // Debug.Log("Transforming Position");
             StopAllCoroutines();
             StartCoroutine(SlerpToPositionCoroutine(transform.parent.position));
             //transform.position = Vector3.Slerp(transform.position, transform.parent.position, slerpSpeed);

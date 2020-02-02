@@ -18,9 +18,9 @@ public abstract class Breakable : MonoBehaviour, Interactable
 
 	public Sprite fixedSprite, brokenSprite;
 
-	private bool isInteracting;
+	public bool isInteracting;
 
-	void Awake()
+	protected virtual void Awake()
 	{
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
@@ -66,10 +66,11 @@ public abstract class Breakable : MonoBehaviour, Interactable
 	}
 	
 	// Should be called on a successful repair
-	protected void Repair()
+	protected virtual void Repair()
 	{
         Debug.Log("Repaired");
 		ghost.ObjectRepaired(this);
+		isInteracting = false;
 		SetBroken(false);
 		RepairedSound();
 	}

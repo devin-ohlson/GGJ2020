@@ -33,4 +33,9 @@ public class Popup : Breakable
 		}
 		return false;
 	}
+
+	protected override void Repair(){
+		base.Repair();
+		canvas.gameObject.SetActive(false);
+	}
 }
