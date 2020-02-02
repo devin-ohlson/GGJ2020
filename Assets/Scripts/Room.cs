@@ -9,6 +9,7 @@ public class Room : MonoBehaviour {
 	public float RoomWidth = 3;
 
 	private Breakable[] breakables;
+	
 	private CameraController mainCam;
 	private StairCtrl stairs;
 
