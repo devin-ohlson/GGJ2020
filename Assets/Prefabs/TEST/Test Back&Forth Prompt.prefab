@@ -284,7 +284,7 @@ MonoBehaviour:
   parentRoom: {fileID: 0}
   breaking: {fileID: 8300000, guid: ff9131f2092e9f244892d612e356e11b, type: 3}
   repairing: {fileID: 8300000, guid: 6f620e471e3b82d479f60bf533e1eaf2, type: 3}
-  repaired: {fileID: 0}
+  repaired: {fileID: 8300000, guid: fee4f4004f3cdc1498cb65da48e5e679, type: 3}
   fixedSprite: {fileID: 0}
   brokenSprite: {fileID: 0}
   prompt: {fileID: 3512038401656191004}
