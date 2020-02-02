@@ -6,6 +6,7 @@ public class Room : MonoBehaviour {
 	public bool IsStartingRoom;
 	[SerializeField] private List<Direction> connectionDirections;
 	private bool[] connectionsArray;
+	private float[] weightsArray;
 	public float RoomWidth = 3;
 
 	private Breakable[] breakables;
@@ -94,8 +95,19 @@ public class Room : MonoBehaviour {
 	}
 
 	public Direction GetConnectingDirection() {
-		int index = Random.Range(0, connectionDirections.Count);
-		return connectionDirections[index];
+		float total = 0;
+		foreach(float weight in weightsArray) {
+			total += weight;
+		}
+		float result = Random.Range(0, total);
+		
+		for(int i = 0; i < weightsArray.Length; i++) {
+			if(result < weightsArray[i]) {
+				return connectionDirections[i];
+			}
+			result -= weightsArray[i];
+		}
+		return connectionDirections[0];
 	}
 
 	public StairCtrl GetStairs() {
