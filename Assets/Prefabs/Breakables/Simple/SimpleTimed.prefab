@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 132864829457773063}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.2, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 132864829744622849}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8d6e167d233ebff42aba0863cdbfff89, type: 3}
-  m_Color: {r: 0.740566, g: 0.79337174, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -219,9 +219,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87521484b55c92ec3ada140b6a32050f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breaking: {fileID: 0}
-  repairing: {fileID: 0}
-  repaired: {fileID: 0}
+  parentRoom: {fileID: 0}
+  breaking: {fileID: 8300000, guid: ff9131f2092e9f244892d612e356e11b, type: 3}
+  repairing: {fileID: 8300000, guid: 6f620e471e3b82d479f60bf533e1eaf2, type: 3}
+  repaired: {fileID: 8300000, guid: fee4f4004f3cdc1498cb65da48e5e679, type: 3}
+  fixedSprite: {fileID: 0}
+  brokenSprite: {fileID: 0}
+  breakOnStart: 0
   holdDuration: 2.5
   actionAnimation: {fileID: 5548702233739897500}
 --- !u!1001 &7012742147877678592

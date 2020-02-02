@@ -245,7 +245,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2325992337753238902}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.5821, y: 0.31, z: 1}
   m_Children: []
   m_Father: {fileID: 2325992338487055677}
@@ -363,6 +363,7 @@ MonoBehaviour:
   blackoutDuration: 0.75
   blackoutOpacity: 0.8
   powerOutModifier: 0.4
+  alertImage: {fileID: 0}
 --- !u!61 &2325992338487055679
 BoxCollider2D:
   m_ObjectHideFlags: 0

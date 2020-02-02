@@ -108,7 +108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.57, y: 0.47}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &8298353533795318383
@@ -149,7 +149,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a428ecbee6b46004699f9dc34bff6ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 8452889000886133908}
+  parentRoom: {fileID: 0}
+  breaking: {fileID: 0}
+  repairing: {fileID: 0}
+  repaired: {fileID: 0}
+  fixedSprite: {fileID: 0}
+  brokenSprite: {fileID: 0}
+  breakOnStart: 0
+  images: []
+  pieces: {fileID: 0}
+  assembledBoard: {fileID: 0}
 --- !u!1 &6766611187780230758
 GameObject:
   m_ObjectHideFlags: 0
