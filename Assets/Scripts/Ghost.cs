@@ -81,6 +81,10 @@ public class Ghost : MonoBehaviour {
 			bobTimer = timeToBob;
 			bobbingUp = !bobbingUp;
 		}
+
+		Vector3 newPos = transform.position;
+		newPos.z = -2;
+		transform.position = newPos;
 	}
 
 	private void MoveToTarget(Vector2 targetPosition) {
@@ -113,7 +117,7 @@ public class Ghost : MonoBehaviour {
 		if(breakTimer < 0) {
 			breakableTarget.Break();
 			audioSource.Play();
-			if(Random.Range(0, 2) == 0)
+			if(Random.Range(0, 4) > 0)
 				StartMoveToBreakable();
 			else {
 				currentState = State.MoveToPlayer;

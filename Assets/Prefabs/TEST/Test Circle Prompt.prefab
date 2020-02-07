@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8d6e167d233ebff42aba0863cdbfff89, type: 3}
-  m_Color: {r: 0.97548723, g: 0.6367924, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -225,6 +225,7 @@ MonoBehaviour:
   repaired: {fileID: 8300000, guid: fee4f4004f3cdc1498cb65da48e5e679, type: 3}
   fixedSprite: {fileID: 0}
   brokenSprite: {fileID: 0}
+  breakOnStart: 0
   prompt: {fileID: 6228219323460202954}
   neededProgress: 5
   radialMod: 3

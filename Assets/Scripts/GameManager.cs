@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 	// Singleton to be easily accessible in a scene
 	private static GameManager _manager;
 	public static GameManager Instance() => _manager;
+	private JukeBox jukebox;
 
 	private VisitorMovement visitor;
 	[SerializeField] private VisitorMovement[] visitorPrefabs = { };
@@ -26,16 +27,21 @@ public class GameManager : MonoBehaviour
 	private int numberOfVisitors = 0;
 	private float gameTime = 0;
 	private float lastVisitor = 0;
-	private int secondsBetweenVisitors = 60;
+	private int secondsBetweenVisitors = 20;
 
 	private int score = 0; // This is the score from BOTH fixing the breakables AND from the visitor's reviews
 	private int perfects = 0; // Stores a combination of 1, 10, and 100 for the three badges in order
-	
+
+
+	public Room startRoom;
+
     void Start()
     {
 		_manager = this;
 		doorbell.loop = false;
 		badgeSmack.loop = false;
+
+		jukebox = FindObjectOfType<JukeBox>();
     }
 
 	private bool visitorNotifiedToLeave = false;
@@ -97,6 +103,7 @@ public class GameManager : MonoBehaviour
 				StartCoroutine(BadgeAnimation());
 			}
 
+			jukebox.PlayMainTheme();
 			GameObject.Destroy(visitor.gameObject);
 		}
 
@@ -121,9 +128,23 @@ public class GameManager : MonoBehaviour
 		// Spawn the next visitor at the door and start its timer
 
 		visitor = GameObject.Instantiate<VisitorMovement>(visitorPrefabs[numberOfVisitors]);
+		visitor.SetRoom(startRoom);
 		if (spawnPoint != null) visitor.transform.position = spawnPoint.position;
 
 		visitorNotifiedToLeave = false;
+
+		//This is so hacky but it was made 4 hours post-jam so whatever.......
+		switch (numberOfVisitors) {
+			case 0:
+				jukebox.PlayCollegeTheme();
+				break;
+			case 1:
+				jukebox.PlayHunterTheme();
+				break;
+			case 2:
+				jukebox.PlayCatsTheme();
+				break;
+		}
 
 		numberOfVisitors++;
 		lastVisitor = gameTime;

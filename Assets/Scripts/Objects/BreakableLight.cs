@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BreakableLight : Breakable {
-	void Start() {
-		parentRoom = GetComponentInParent<Room>();
+	protected override void Start() {
+		base.Start();
+		fixedSprite = spriteRenderer.sprite;
+		brokenSprite = spriteRenderer.sprite;
 	}
 
 	public override void Break() {
